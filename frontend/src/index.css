@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/*
+  Agentic RAG: a night-sky workspace. Deep navy panels, a violet → blue → cyan
+  brand gradient, and green reserved for "online / ready" states.
+  Provenance still carries its own colour: Gmail red, Notion white, memory violet.
+*/
+
+:root {
+  --bg: #0a0f26;
+  --bg-2: #0d1330;
+  --panel: #121939;
+  --panel-2: #182046;
+  --line: #242e5c;
+  --line-strong: #323e78;
+  --ink: #eef0ff;
+  --muted: #9aa3c9;
+  --faint: #6b75a3;
+  --violet: #8b5cf6;
+  --violet-2: #7c3aed;
+  --indigo: #6366f1;
+  --blue: #3b82f6;
+  --cyan: #22d3ee;
+  --green: #22c55e;
+  --green-soft: rgb(34 197 94 / 0.14);
+  --amber: #f5b544;
+  --amber-soft: rgb(245 181 68 / 0.14);
+  --red: #f87171;
+  --red-soft: rgb(248 113 113 / 0.14);
+  --gmail: #f2685b;
+  --gmail-soft: rgb(242 104 91 / 0.16);
+  --notion: #f4f4f5;
+  --notion-soft: rgb(244 244 245 / 0.12);
+  --memory: #b69cff;
+  --memory-soft: rgb(139 92 246 / 0.18);
+  --glow: 0 0 0 1px rgb(139 92 246 / 0.35), 0 12px 40px -12px rgb(99 102 241 / 0.55);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-violet: var(--violet);
+  --color-violet-2: var(--violet-2);
+  --color-indigo: var(--indigo);
+  --color-blue: var(--blue);
+  --color-cyan: var(--cyan);
+  --color-green: var(--green);
+  --color-green-soft: var(--green-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-gmail: var(--gmail);
+  --color-gmail-soft: var(--gmail-soft);
+  --color-notion: var(--notion);
+  --color-notion-soft: var(--notion-soft);
+  --color-memory: var(--memory);
+  --color-memory-soft: var(--memory-soft);
+  --shadow-glow: var(--glow);
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    background:
+      radial-gradient(60rem 40rem at 85% -10%, rgb(99 102 241 / 0.18), transparent 60%),
+      radial-gradient(50rem 40rem at 10% 110%, rgb(139 92 246 / 0.14), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { text-wrap: balance; line-height: 1.2; }
+  :focus-visible { outline: 2.5px solid var(--cyan); outline-offset: 2px; border-radius: 8px; }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  ::selection { background: rgb(139 92 246 / 0.45); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+}
+
+@layer components {
+  .panel {
+    background: linear-gradient(180deg, rgb(24 32 70 / 0.85), rgb(18 25 57 / 0.92));
+    border: 1px solid var(--line);
+    border-radius: 1.1rem;
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, #b07bff 0%, #8b7bff 30%, #6aa8ff 60%, #4fe0f0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 2.6rem; padding: 0.55rem 1rem; border-radius: 0.8rem;
+    font-weight: 600; line-height: 1.2; cursor: pointer;
+    transition: background-color 150ms, border-color 150ms, filter 150ms, transform 150ms;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; box-shadow: 0 8px 24px -10px rgb(139 92 246 / 0.9); }
+  .btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+  .btn-secondary { background: var(--panel-2); border: 1px solid var(--line-strong); }
+  .btn-secondary:hover:not(:disabled) { border-color: var(--violet); }
+  .btn-ghost { color: var(--muted); }
+  .btn-ghost:hover:not(:disabled) { background: var(--panel-2); color: var(--ink); }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+  }
+  .pill-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: currentColor; }
+
+  /* The answer: readable prose with tight lists. */
+  .answer { overflow-wrap: anywhere; color: #e2e5fb; }
+  .answer > * + * { margin-top: 0.7em; }
+  .answer ul { list-style: disc; padding-left: 1.3em; }
+  .answer ol { list-style: decimal; padding-left: 1.4em; }
+  .answer li + li { margin-top: 0.25em; }
+  .answer strong { font-weight: 700; color: var(--ink); }
+  .answer h1, .answer h2, .answer h3, .answer h4 { font-weight: 700; font-size: 1.02em; margin-top: 1em; color: var(--ink); }
+  .answer hr { border: 0; border-top: 1px solid var(--line); }
+  .answer code { font-family: var(--font-mono); font-size: 0.86em; background: var(--panel-2); padding: 0.1em 0.35em; border-radius: 0.35em; }
+  .answer pre { background: var(--bg-2); padding: 0.8em 1em; border-radius: 0.7em; overflow-x: auto; }
+  .answer pre code { background: none; padding: 0; }
+  .answer table { border-collapse: collapse; display: block; overflow-x: auto; }
+  .answer th, .answer td { border: 1px solid var(--line); padding: 0.35em 0.6em; text-align: left; }
+  .answer a:not(.cite) { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+  .cite {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 1.35rem; height: 1.25rem; padding: 0 0.3rem; margin: 0 0.1rem;
+    border-radius: 0.4rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+    vertical-align: 0.12em; cursor: pointer; text-decoration: none;
+    transition: transform 120ms;
+  }
+  .cite:hover { transform: translateY(-1px); }
+  .cite-gmail { background: var(--gmail-soft); color: var(--gmail); }
+  .cite-notion { background: var(--notion-soft); color: var(--notion); }
+  .source-flash { animation: flash 1.2s ease-out; }
+}
+
+@keyframes flash { 0% { box-shadow: 0 0 0 2px var(--cyan); } 100% { box-shadow: 0 0 0 2px transparent; } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+@keyframes wave { 0%, 60%, 100% { transform: rotate(0deg); } 10%, 30% { transform: rotate(-14deg); } 20%, 40% { transform: rotate(10deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes twinkle { 0%, 100% { opacity: 0.9; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
