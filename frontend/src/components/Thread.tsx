@@ -159,11 +159,12 @@ export function ChatPanel(props: {
         <span className="grid size-10 place-items-center rounded-xl bg-[linear-gradient(135deg,#8b5cf6,#6366f1)]">
           <MessageSquareMore size={22} className="text-white" aria-hidden />
         </span>
-        <h2 className="text-lg font-bold">AI Chat</h2>
+        <h2 className="whitespace-nowrap text-lg font-bold">AI Chat</h2>
         <div className="ml-auto flex items-center gap-2">
           {props.messages.length > 0 && (
-            <button className="btn btn-ghost min-h-0 px-3 py-1.5 text-sm" onClick={props.onNewChat}>
-              <Plus size={16} aria-hidden /> New chat
+            <button className="btn btn-ghost min-h-0 whitespace-nowrap px-3 py-1.5 text-sm" onClick={props.onNewChat} aria-label="New chat" title="New chat">
+              <Plus size={16} aria-hidden />
+              <span className="hidden min-[420px]:inline">New chat</span>
             </button>
           )}
           <span className={`pill ${online ? "bg-green-soft text-green" : "bg-red-soft text-red"}`} title={props.status?.llm.label}>

@@ -85,8 +85,13 @@ export function Hero({ compact }: { compact: boolean }) {
       <Sparkle className="absolute right-[24%] top-5 text-white/90 [animation:twinkle_3s_ease-in-out_infinite]" size={30} fill="currentColor" aria-hidden />
       <Sparkle className="absolute bottom-6 right-[30%] text-white/70 [animation:twinkle_4s_ease-in-out_infinite]" size={16} fill="currentColor" aria-hidden />
       <Sparkle className="absolute bottom-5 left-[52%] hidden text-indigo-300/60 md:block" size={18} fill="currentColor" aria-hidden />
-      <div className="relative z-10 max-w-[46rem] md:pr-[22rem] xl:pr-0">
-        <h1 className={`text-gradient font-extrabold tracking-tight ${compact ? "text-3xl sm:text-[2.4rem]" : "text-4xl sm:text-5xl xl:text-[3.5rem]"}`}>
+      {/* The right padding keeps the text clear of the robot and tiles; the full headline shrinks to fit on laptops. */}
+      <div className={`relative z-10 ${compact ? "md:pr-[18rem]" : "md:pr-[21rem] lg:pr-[25rem]"}`}>
+        <h1
+          className={`text-gradient font-extrabold tracking-tight ${
+            compact ? "text-3xl sm:text-[2.4rem]" : "text-4xl sm:text-5xl lg:text-[length:clamp(2.25rem,calc((100vw_-_49rem)/12),3.5rem)]"
+          }`}
+        >
           Ask. Search. Remember.
         </h1>
         <p className="mt-2 text-base text-indigo-100/90 sm:text-xl">Your AI agent over Gmail, Notion and more.</p>

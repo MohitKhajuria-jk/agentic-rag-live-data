@@ -6,6 +6,19 @@ Built with Python, FastAPI, React, TypeScript, Tailwind CSS, Google Gemini (tool
 
 > Ask *"When is my Northwind interview, and what should I revise?"* and the agent searches Gmail for the invitation, then Notion for your prep notes. It answers with the date, time and topics, citing the email as [1] and the page as [2].
 
+![Agentic RAG answering "How much is my latest Cloudly invoice, and is it within my budget?" by combining a Gmail invoice with a Notion budget page, with numbered citations, the live agent trace and the cited sources](docs/screenshots/answer.png)
+
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Welcome screen with Gmail, Notion and memory status cards and recent chats" width="64%">
+  &nbsp;
+  <img src="docs/screenshots/mobile.png" alt="The same cited answer on a phone" width="22%">
+</p>
+<p align="center">
+  <img src="docs/screenshots/memory.png" alt="Memory page listing facts the agent saved from a chat" width="86%">
+</p>
+
+<sub>The screenshots use the built-in demo inbox and Notion workspace, which are fictional. The answers were written by Gemini (gemini-3.5-flash).</sub>
+
 ## Features
 
 - **Agentic retrieval.** The model plans its own searches with tool calling. It writes Gmail queries with operators (`from:`, `newer_than:7d`, `has:attachment`), retries with other words when a search comes up empty, combines several sources, and reads full items when an excerpt isn't enough.
@@ -63,7 +76,7 @@ Open **http://localhost:5173**. With demo mode on, try the suggested questions s
    - **Application type:** Web application
    - **Authorized redirect URI:** `http://localhost:8000/api/oauth/google/callback`
 5. Copy the client ID and secret into `backend/.env` as `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, then restart the backend.
-6. In the app, open **Sources → Connect Gmail**. Google warns that it hasn't verified the app. That's expected for your own testing app, so choose **Continue** and allow read access.
+6. In the app, open **Integrations → Connect Gmail**. Google warns that it hasn't verified the app. That's expected for your own testing app, so choose **Continue** and allow read access.
 
 The app only asks for `gmail.readonly`.
 
@@ -77,7 +90,7 @@ The app only asks for `gmail.readonly`.
 
 **Option B: connect with a button (OAuth)**
 
-Create a **Public** integration instead, with the redirect URI `http://localhost:8000/api/oauth/notion/callback`. Put its client ID and secret in `NOTION_CLIENT_ID` and `NOTION_CLIENT_SECRET`, then use **Sources → Connect Notion** in the app.
+Create a **Public** integration instead, with the redirect URI `http://localhost:8000/api/oauth/notion/callback`. Put its client ID and secret in `NOTION_CLIENT_ID` and `NOTION_CLIENT_SECRET`, then use **Integrations → Connect Notion** in the app.
 
 ## How it works
 
@@ -119,7 +132,7 @@ cd backend;  .venv\Scripts\python -m pip install -r requirements-dev.txt;  .venv
 cd frontend; npm test
 ```
 
-The 44 backend tests cover:
+The 45 backend tests cover:
 - the agent loop, using a scripted model, including thought-signature passthrough and multi-turn source numbering
 - Gmail and Notion parsing against mocked APIs
 - OAuth state checks and token encryption
@@ -136,6 +149,8 @@ backend/
   data/            created at runtime: SQLite database and encryption secret (git-ignored)
 frontend/
   src/             React + TypeScript UI
+docs/
+  screenshots/     images used in this README
 ```
 
 ## Notes

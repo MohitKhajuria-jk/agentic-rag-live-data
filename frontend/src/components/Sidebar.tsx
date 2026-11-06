@@ -28,7 +28,8 @@ export function Sidebar(props: {
   const model = props.status?.llm.using_fallback ? props.status.llm.fallback_model : props.status?.llm.model;
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden bg-[linear-gradient(180deg,#0e1434,#0b1029)] px-4 pb-4 pt-6">
+    // On short screens (phones) the whole menu scrolls, so recent chats always keep some room.
+    <div className="relative flex h-full flex-col overflow-y-auto overflow-x-hidden bg-[linear-gradient(180deg,#0e1434,#0b1029)] px-4 pb-4 pt-6">
       {props.onClose && (
         <button className="absolute right-3 top-3 grid size-9 place-items-center rounded-lg text-muted hover:bg-panel-2" onClick={props.onClose} aria-label="Close menu">
           <X size={20} />
@@ -64,7 +65,7 @@ export function Sidebar(props: {
         })}
       </nav>
 
-      <div className="mt-6 flex min-h-0 flex-1 flex-col">
+      <div className="mt-6 flex min-h-[7.5rem] flex-1 flex-col">
         <p className="px-4 text-xs font-bold tracking-wide text-faint">Recent chats</p>
         <ul className="mt-2 grid min-h-0 grid-cols-[minmax(0,1fr)] content-start gap-0.5 overflow-y-auto" aria-label="Recent chats">
           {props.conversations.length === 0 && <li className="px-4 text-sm text-faint">Your chats will appear here.</li>}
@@ -104,24 +105,26 @@ export function Sidebar(props: {
         </ul>
       </div>
 
-      <div className="relative z-10 mt-4 flex items-center gap-3 rounded-2xl border border-[#3b4aa8]/70 bg-[linear-gradient(135deg,#1d2a7a,#18205a)] px-4 py-3.5" title={props.status?.llm.label}>
-        <Sparkle size={28} color="url(#spark)" fill="url(#spark)" className="shrink-0" aria-hidden />
-        <div className="min-w-0 leading-tight">
-          <p className="text-sm text-indigo-100/80">Powered by</p>
-          <p className="text-lg font-bold">{provider}</p>
-          {model && <p className="truncate text-xs text-indigo-200/70">{model}</p>}
+      <div className="relative mt-4 shrink-0">
+        <div className="relative z-10 flex items-center gap-3 rounded-2xl border border-[#3b4aa8]/70 bg-[linear-gradient(135deg,#1d2a7a,#18205a)] px-4 py-3.5" title={props.status?.llm.label}>
+          <Sparkle size={28} color="url(#spark)" fill="url(#spark)" className="shrink-0" aria-hidden />
+          <div className="min-w-0 leading-tight">
+            <p className="text-sm text-indigo-100/80">Powered by</p>
+            <p className="text-lg font-bold">{provider}</p>
+            {model && <p className="truncate text-xs text-indigo-200/70">{model}</p>}
+          </div>
         </div>
+        <svg className="pointer-events-none absolute -bottom-4 -left-4 h-28 w-[calc(100%+2rem)]" viewBox="0 0 250 110" preserveAspectRatio="none" aria-hidden>
+          <defs>
+            <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stopColor="#7c3aed" stopOpacity="0.55" />
+              <stop offset="1" stopColor="#3b82f6" stopOpacity="0.15" />
+            </linearGradient>
+          </defs>
+          <path d="M0 40 C 60 10, 120 70, 250 50 L250 110 L0 110 Z" fill="url(#wave)" />
+          <path d="M0 70 C 70 40, 140 95, 250 75 L250 110 L0 110 Z" fill="#6d28d9" opacity="0.35" />
+        </svg>
       </div>
-      <svg className="pointer-events-none absolute -bottom-2 left-0 h-28 w-full" viewBox="0 0 250 110" preserveAspectRatio="none" aria-hidden>
-        <defs>
-          <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#7c3aed" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#3b82f6" stopOpacity="0.15" />
-          </linearGradient>
-        </defs>
-        <path d="M0 40 C 60 10, 120 70, 250 50 L250 110 L0 110 Z" fill="url(#wave)" />
-        <path d="M0 70 C 70 40, 140 95, 250 75 L250 110 L0 110 Z" fill="#6d28d9" opacity="0.35" />
-      </svg>
     </div>
   );
 }
